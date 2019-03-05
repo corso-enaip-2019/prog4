@@ -22,6 +22,9 @@ namespace Brackets
             Console.ReadLine();
         }
 
+        static List<char> OpenBrackets = new List<char>() { '(', '[', '{' };
+        static List<char> ClosedBrackets = new List<char>() { ')', ']', '}' };
+
         /// <summary>
         /// Verify if passed text contains the correct parentheses pairs.
         /// </summary>
@@ -29,10 +32,6 @@ namespace Brackets
         /// <returns></returns>
         static bool CheckBrackets(string text)
         {
-
-            List<char> OpenBrackets = new List<char>() { '(', '[', '{' };
-            List<char> ClosedBrackets = new List<char>() { ')', ']', '}' };
-
             Stack<char> stack = new Stack<char>();
 
             foreach (char i in text)
@@ -64,24 +63,9 @@ namespace Brackets
         /// <returns></returns>
         static char GetClosedBracket(char ch)
         {
-            switch (ch)
-            {
-                case '(':
+            int ClosedBracketIndex = ClosedBrackets.IndexOf(ch);
 
-                    return ')';
-
-                case '[':
-
-                    return ']';
-
-                case '{':
-
-                    return '}';
-
-                default:
-
-                    return ' ';
-            }
+            return ClosedBrackets[ClosedBracketIndex];
         }
     }
 }
