@@ -10,22 +10,26 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            decimal side_a = AskCheckNumber("Insert first side");
-            decimal side_b = AskCheckNumber("Insert second side");
-            decimal side_c = AskCheckNumber("Insert third side");
-            
-            bool is_sum_of_sides_correct = side_a < (side_b + side_c) && side_b < (side_a + side_c) && side_c < (side_a + side_b);
+            Console.WriteLine("How many sides?");
 
-            bool is_abs_difference_correct = side_a > Math.Abs(side_b - side_c) && side_b > Math.Abs(side_c - side_a) && side_c > Math.Abs(side_a - side_b);
+            decimal[] sides = new decimal[3];
 
-            if (is_sum_of_sides_correct && is_abs_difference_correct)
+            for (int i = 0; i < sides.Length; ++i)
+            {
+                sides[i] = AskCheckNumber(string.Concat("Insert side ", i + 1));
+            }
+
+            if (IsTriangle(sides[0], sides[1], sides[2]))
 
                 Console.WriteLine("Ok it can be a triangle");
 
             else
+            {
+                decimal[] solution = FindPossibleTriangle(sides);
 
-                Console.WriteLine("Sorry the numbers you entered cannot be a triangle");
-
+                Console.WriteLine(string.Concat("Sorry the numbers you entered cannot be a triangle, try ",
+                    string.Join(",", solution)));
+            }
             Console.ReadLine();
         }
 
@@ -36,6 +40,8 @@ namespace ConsoleApp1
         /// <returns>The converted decimal inserted by the user</returns>
         static decimal AskCheckNumber(string message)
         {
+            System.Diagnostics.Debug.WriteLine(string.Concat("Message: ", message));
+
             Console.WriteLine(message);
 
             string input = Console.ReadLine();
@@ -50,7 +56,42 @@ namespace ConsoleApp1
 
                 Console.WriteLine("Sorry the input must be positive!");
 
+            System.Diagnostics.Debug.WriteLine($"{message}, {input}");
+
             return convertedValue;
+        }
+
+        /// <summary>
+        /// Given three decimals checks if it can be a triangle
+        /// </summary>
+        /// <param name="a">First side of the triangle</param>
+        /// <param name="b">Second side of the triangle</param>
+        /// <param name="c">Third side of the triangle</param>
+        /// <returns>true or false</returns>
+        static bool IsTriangle(decimal a, decimal b, decimal c)
+        {
+            bool is_sum_of_sides_correct = a < (b + c) &&
+                b < (a + c) &&
+                c < (a + b);
+
+            bool is_abs_difference_correct = a > Math.Abs(b - c) &&
+                b > Math.Abs(c - a) &&
+                c > Math.Abs(a - b);
+
+            return is_sum_of_sides_correct && is_abs_difference_correct;
+        }
+
+        static decimal[] FindPossibleTriangle(decimal[] sides)
+        {
+            Array.Sort(sides);
+
+            do
+            {
+                sides[2]--;
+
+            } while (!IsTriangle(sides[0], sides[1], sides[2]));
+
+            return sides;
         }
     }
 }

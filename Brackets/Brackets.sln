@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2027
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Brackets", "Brackets\Brackets.csproj", "{153843C1-C66D-4AE3-94D2-B0EBB8CA000B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{153843C1-C66D-4AE3-94D2-B0EBB8CA000B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{153843C1-C66D-4AE3-94D2-B0EBB8CA000B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{153843C1-C66D-4AE3-94D2-B0EBB8CA000B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{153843C1-C66D-4AE3-94D2-B0EBB8CA000B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {376F6909-B890-4E00-BCBE-426FA8C522EB}
+	EndGlobalSection
+EndGlobal
