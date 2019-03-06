@@ -67,5 +67,12 @@ namespace Brackets
 
             return ClosedBrackets[ClosedBracketIndex];
         }
+
+        static int[] GetFailedBracketIndex()
+        {
+            int[] index = new int[2];
+
+            return index;
+        }
     }
 }
