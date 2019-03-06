@@ -10,14 +10,33 @@ namespace Brackets
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Please insert a string");
+            bool ok = CheckBrackets(@"
+                namespace Brackets
+                {
+                    class Program
+                    {
+                        static void Main(string[] args)
+                        {
+                            bool ok = CheckBrackets("")
+                            Console.ReadLine();
+                        }
+                        static bool CheckBrackets(string text)
+                        {
+                        }
+                    }
+                }", out int[] MissingBracketPosition);
 
-            string message = Console.ReadLine();
+            int row = MissingBracketPosition[0];
+            int column = MissingBracketPosition[1];
 
-            bool ok = CheckBrackets(message);
-
-            string strOk = ok ? "OK" : "KO";
-            Console.WriteLine($"Text is { ok }");
+            if (!ok)
+            {
+                Console.WriteLine(string.Concat("Sorry, found unmatched parenthesis at row ", row, " and column ", column));
+            }
+            else
+            {
+                Console.WriteLine("Text is ok!");
+            }
 
             Console.ReadLine();
         }
@@ -30,26 +49,45 @@ namespace Brackets
         /// </summary>
         /// <param name="text"></param>
         /// <returns></returns>
-        static bool CheckBrackets(string text)
+        static bool CheckBrackets(string text, out int[] MissingBracketPosition)
         {
             Stack<char> stack = new Stack<char>();
 
+            MissingBracketPosition = new int[] { 0, 0 };
+
+            int CurrentRow = 0;
+            int CurrentCol = 0;
+
             foreach (char i in text)
             {
-                if (OpenBrackets.Contains(i))
+                if (i == '\n')
+                {
+                    CurrentRow++;
+                    CurrentCol = 0;
+                } else
+                {
+                    CurrentCol++;
+                }
 
+                if (OpenBrackets.Contains(i))
+                { 
                     stack.Push(i);
+                }
 
                 if (ClosedBrackets.Contains(i))
                 {
 
                     if (stack.Peek() == GetClosedBracket(i) && stack.Count != 0)
-         
+                    {
                         stack.Pop();
-         
+                    }
                     else
+                    {
+                        MissingBracketPosition[0] = CurrentRow;
+                        MissingBracketPosition[1] = CurrentCol;
 
                         return false;
+                    }
                 }
             }
 
@@ -66,13 +104,6 @@ namespace Brackets
             int ClosedBracketIndex = ClosedBrackets.IndexOf(ch);
 
             return ClosedBrackets[ClosedBracketIndex];
-        }
-
-        static int[] GetFailedBracketIndex()
-        {
-            int[] index = new int[2];
-
-            return index;
         }
     }
 }
