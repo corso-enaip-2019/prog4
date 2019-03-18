@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 
 namespace ClasseStudenti
@@ -19,7 +20,7 @@ namespace ClasseStudenti
            Console.ReadLine();
         }
 
-        static Dictionary<int, List<string>> NameClassDictionary = new Dictionary<int, List<string>>();
+        static Dictionary<int, List<Students>> NameClassDictionary = new Dictionary<int, List<Students>>();
 
         static void StoreStudentNameAndClass()
         {
@@ -36,14 +37,16 @@ namespace ClasseStudenti
 
             Console.WriteLine("Please insert student's name and press enter:");
 
-            string name = Console.ReadLine();
+            Students student = new Students();
+
+            student.Name = Console.ReadLine();
 
             if (!NameClassDictionary.ContainsKey(_class))
             {
-                NameClassDictionary[_class] = new List<string>();
+                NameClassDictionary[_class] = new List<Students>();
             }
 
-            NameClassDictionary[_class].Add(name);
+            NameClassDictionary[_class].Add(student);
         }
 
         static void DisplayStudentsInClass()
@@ -55,9 +58,9 @@ namespace ClasseStudenti
                 return;
             }
 
-            foreach (KeyValuePair<int, List<string>> item in NameClassDictionary)
+            foreach (KeyValuePair<int, List<Students>> item in NameClassDictionary)
             {
-                Console.WriteLine($"Classe: {item.Key}, Nome: {string.Join(", " , item.Value)}");
+                Console.WriteLine($"Classe: {item.Key}, Nome: {string.Join(", " , item.Value.Select(n => n.Name))}");
             }
         }
 
@@ -157,7 +160,7 @@ namespace ClasseStudenti
 
             for(int i = 0; i < NameClassDictionary.Count; ++i)
             {
-                if(NameClassDictionary.TryGetValue(i, out List<string> names) && names.Contains(name))
+                if(NameClassDictionary.TryGetValue(i, out List<Students> st) && st.Any(s => s.Name == name))
                 {
                     Console.WriteLine(string.Concat("Student", name, "found in class", i));
                 }
